@@ -19,7 +19,7 @@
             color: #ffffff;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         /* Capa de ruido sutil para textura */
@@ -64,28 +64,29 @@
             justify-content: center;
             align-items: center;
             z-index: 2;
+            padding-top: 80px;
         }
 
         .content {
             text-align: center;
             padding: 2rem;
             animation: fadeIn 1s ease-out forwards;
-            max-width: 600px;
+            max-width: 500px;
             width: 100%;
         }
 
         /* Estilos del título principal (Coming Soon) */
         h1 {
-            font-size: clamp(4rem, 10vw, 8rem);
+            font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 800;
             letter-spacing: -2px;
             line-height: 1.1;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             color: #ffffff;
             text-shadow: 0px 4px 30px rgba(0,0,0,0.3);
         }
 
-        /* Subtítulo explicativo opcional */
+        /* Subtítulo explicativo */
         p.description {
             font-size: 1.1rem;
             color: #d8b4fe;
@@ -100,55 +101,58 @@
             flex-direction: column;
             gap: 1rem;
             width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 24px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
         }
 
-        @media (min-width: 480px) {
-            .subscribe-form {
-                flex-direction: row;
-                background: rgba(255, 255, 255, 0.05);
-                border-radius: 50px;
-                padding: 0.5rem;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                backdrop-filter: blur(10px);
-                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            gap: 0.5rem;
         }
 
-        .subscribe-form input[type="email"] {
-            flex: 1;
+        .input-group label {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-left: 0.5rem;
+        }
+
+        .subscribe-form input {
+            width: 100%;
             padding: 1rem 1.5rem;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
             color: #fff;
             font-size: 1rem;
             outline: none;
             transition: all 0.3s ease;
         }
 
-        @media (min-width: 480px) {
-            .subscribe-form input[type="email"] {
-                border: none;
-                background: transparent;
-            }
+        .subscribe-form input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
         }
 
-        .subscribe-form input[type="email"]::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .subscribe-form input[type="email"]:focus {
-            background: rgba(255, 255, 255, 0.15);
+        .subscribe-form input:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(196, 181, 253, 0.5);
+            box-shadow: 0 0 0 4px rgba(196, 181, 253, 0.1);
         }
 
         .subscribe-form button {
-            padding: 1rem 2rem;
-            border-radius: 50px;
+            margin-top: 1rem;
+            padding: 1.2rem;
+            border-radius: 12px;
             border: none;
             background: #ffffff;
             color: #3b0764;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
@@ -160,8 +164,33 @@
             background: #f3f4f6;
         }
 
-        .subscribe-form button:active {
-            transform: translateY(0);
+        .subscribe-form button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Mensajes de feedback */
+        #message {
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+            border-radius: 12px;
+            padding: 1rem;
+            display: none;
+        }
+
+        #message.success {
+            display: block;
+            background: rgba(34, 197, 94, 0.1);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        #message.error {
+            display: block;
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.2);
         }
 
         /* Animación de entrada */
@@ -178,26 +207,94 @@
     </style>
 </head>
 <body>
-    <!-- Textura de fondo -->
     <div class="noise"></div>
     
-    <!-- Navbar -->
     <nav>
         <a href="#" class="logo">FlatTwin</a>
     </nav>
     
-    <!-- Contenido Principal -->
     <div class="main-container">
         <div class="content">
             <h1>Coming Soon</h1>
-            <p class="description">Apúntate para ser el primero en enterarte cuando estemos listos.</p>
+            <p class="description">Encuentra a tu compañero ideal. Únete a la lista de espera exclusiva.</p>
             
-            <!-- Formulario. El atributo 'action' es donde pondrás tu endpoint futuro -->
-            <form class="subscribe-form" action="#" method="POST">
-                <input type="email" name="email" placeholder="Tu correo electrónico..." required>
-                <button type="submit">Notificarme</button>
+            <form class="subscribe-form" id="leadForm">
+                <div class="input-group">
+                    <label for="name">Nombre Completo *</label>
+                    <input type="text" id="name" name="name" placeholder="Ej. Juan Pérez" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="tu@email.com">
+                </div>
+
+                <div class="input-group">
+                    <label for="phone">Teléfono móvil</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+34 600 000 000">
+                </div>
+                
+                <button type="submit" id="submitBtn">Unirme a la lista</button>
             </form>
+
+            <div id="message"></div>
         </div>
     </div>
+
+    <script>
+        const form = document.getElementById('leadForm');
+        const messageDiv = document.getElementById('message');
+        const submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+
+            // Validación mínima: al menos email o teléfono
+            if (!email && !phone) {
+                showMessage('Debes introducir al menos un email o un teléfono para que podamos contactarte.', 'error');
+                return;
+            }
+
+            // Bloquear botón
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Enviando...';
+            messageDiv.style.display = 'none';
+
+            try {
+                // Cambia esta URL por la de tu backend real en producción
+                const response = await fetch('http://localhost:3000/api/v1/leads', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name, email, phone }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showMessage('¡Genial! Ya estás en la lista. Te avisaremos pronto.', 'success');
+                    form.reset();
+                } else {
+                    showMessage(data.message || 'Ups! Algo ha salido mal. Inténtalo de nuevo.', 'error');
+                }
+            } catch (error) {
+                showMessage('No se ha podido conectar con el servidor. Revisa tu conexión.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Unirme a la lista';
+            }
+        });
+
+        function showMessage(text, type) {
+            messageDiv.innerText = text;
+            messageDiv.className = type;
+            messageDiv.style.display = 'block';
+        }
+    </script>
 </body>
 </html>
