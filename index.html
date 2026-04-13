@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FlatTwin | Coming Soon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         /* Reseteo básico y fuentes */
         * {
@@ -14,12 +17,13 @@
 
         body, html {
             height: 100%;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #0b192c 0%, #3b0764 100%);
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a2744 0%, #4774D0 100%);
             color: #ffffff;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
+            overflow-y: hidden;
         }
 
         /* Capa de ruido sutil para textura */
@@ -51,158 +55,348 @@
             font-size: 1.8rem;
             font-weight: 800;
             letter-spacing: -1px;
-            background: linear-gradient(to right, #ffffff, #c4b5fd);
+            background: linear-gradient(to right, #ffffff, #a3c2ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-decoration: none;
         }
 
-        /* Contenedor central */
-        .main-container {
+        /* Contenedores de pantallas */
+        .screen {
+            display: none;
             flex: 1;
-            display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 2;
-            padding-top: 80px;
-        }
-
-        .content {
-            text-align: center;
             padding: 2rem;
-            animation: fadeIn 1s ease-out forwards;
-            max-width: 500px;
+            padding-top: 80px;
+            text-align: center;
             width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .screen.active {
+            display: flex;
         }
 
-        /* Estilos del título principal (Coming Soon) */
-        h1 {
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 800;
-            letter-spacing: -2px;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            color: #ffffff;
-            text-shadow: 0px 4px 30px rgba(0,0,0,0.3);
-        }
-
-        /* Subtítulo explicativo */
-        p.description {
+        /* Botón común con relieve */
+        .btn-relief {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 4px 4px 15px rgba(0,0,0,0.3), inset 1px 1px 3px rgba(255,255,255,0.2);
+            border-radius: 30px;
+            padding: 1rem 2.5rem;
+            color: #fff;
             font-size: 1.1rem;
-            color: #d8b4fe;
-            margin-bottom: 2.5rem;
-            opacity: 0.9;
-            line-height: 1.5;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-relief:hover {
+            transform: translateY(-2px);
+            box-shadow: 6px 6px 20px rgba(0,0,0,0.4), inset 1px 1px 3px rgba(255,255,255,0.3);
+            background: rgba(255, 255, 255, 0.2);
         }
 
-        /* Formulario de suscripción */
-        .subscribe-form {
+        /* === PANTALLA 1 === */
+        .s1-txt1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            text-shadow: 0px 4px 20px rgba(0,0,0,0.3);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        .s1-txt3 {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(-30px);
+            font-style: italic;
+        }
+        .s1-btn {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        
+        .animate-down {
+            animation: slideDown 1s ease-out forwards;
+        }
+        @keyframes slideDown {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* === PANTALLA 2 === */
+        .s2-texts {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            height: 250px;
+            margin-bottom: 3rem;
+        }
+        .s2-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(20px);
+            max-height: 0;
+            margin: 0;
+            overflow: hidden;
+            transition: all 0.8s ease;
+        }
+        .s2-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+            max-height: 60px;
+            margin-top: 1.5rem;
+        }
+        .s2-btn {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+        .s2-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255,255,255,0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+        }
+
+        /* === PANTALLA 3 (Chat) === */
+        .phone-silhouette {
+            width: 100%;
+            max-width: 320px;
+            height: 550px;
+            border: 6px solid rgba(255,255,255,0.3);
+            border-radius: 40px;
+            padding: 20px 15px 15px 15px;
+            display: flex;
+            flex-direction: column;
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+            margin: 0 auto;
+        }
+        .phone-silhouette::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 5px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+        }
+        .chat-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 15px;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .chat-logo {
+            font-size: 1.2rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #ffffff, #a3c2ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .chat-body {
+            flex: 1;
             display: flex;
             flex-direction: column;
             gap: 1rem;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+        .bubble {
+            padding: 12px 18px;
+            border-radius: 20px;
+            max-width: 85%;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            opacity: 0;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+        }
+        .bubble.left {
+            align-self: flex-start;
+            background: rgba(255,255,255,0.15);
+            border-bottom-left-radius: 5px;
+            text-align: left;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .typing-indicator {
+            display: flex;
+            gap: 5px;
+            padding: 10px 15px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            width: fit-content;
+            align-self: flex-start;
+        }
+        .typing-indicator span {
+            width: 6px; height: 6px;
+            background: #fff;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        
+        .chat-footer {
+            margin-top: auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .chat-action-btn {
             width: 100%;
-            background: rgba(255, 255, 255, 0.03);
+            background: #4774D0;
+            color: #ffffff;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(71, 116, 208, 0.4);
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .chat-action-btn:hover {
+            background: #5a85de;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(71, 116, 208, 0.6);
+        }
+
+        .chat-action-btn:active {
+            transform: translateY(0);
+        }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes slideUpFadeIn {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes flyUpOut {
+            to { transform: translateY(-100px); opacity: 0; }
+        }
+
+        /* === PANTALLA 4 === */
+        .s4-title {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 800;
+            margin-bottom: 2rem;
+            text-shadow: 0px 4px 20px rgba(0,0,0,0.3);
+        }
+        .form-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 24px;
             padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-        }
-
-        .input-group {
             display: flex;
             flex-direction: column;
+            gap: 1.5rem;
+            animation: fadeIn 1s;
+        }
+        .input-wrapper {
             text-align: left;
+            display: flex;
+            flex-direction: column;
             gap: 0.5rem;
         }
-
-        .input-group label {
+        .input-wrapper label {
             font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255,255,255,0.8);
             margin-left: 0.5rem;
         }
-
-        .subscribe-form input {
+        .form-container input {
             width: 100%;
             padding: 1rem 1.5rem;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
             color: #fff;
             font-size: 1rem;
             outline: none;
             transition: all 0.3s ease;
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.2);
+            font-family: 'Inter', sans-serif;
         }
-
-        .subscribe-form input::placeholder {
-            color: rgba(255, 255, 255, 0.3);
+        .form-container input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
         }
-
-        .subscribe-form input:focus {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(196, 181, 253, 0.5);
-            box-shadow: 0 0 0 4px rgba(196, 181, 253, 0.1);
+        .form-container input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(163, 194, 255, 0.6);
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.2), 0 0 0 4px rgba(71, 116, 208, 0.3);
         }
-
-        .subscribe-form button {
-            margin-top: 1rem;
-            padding: 1.2rem;
-            border-radius: 12px;
-            border: none;
-            background: #ffffff;
-            color: #3b0764;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+        .s4-btn {
+            margin-top: 0.5rem;
+            background: #4774D0;
+            color: #ffffff;
+            width: 100%;
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(71, 116, 208, 0.4);
         }
-
-        .subscribe-form button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
-            background: #f3f4f6;
+        .s4-btn:hover {
+            background: #5a85de;
+            box-shadow: 0 6px 20px rgba(71, 116, 208, 0.6);
         }
-
-        .subscribe-form button:disabled {
+        .s4-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
             transform: none;
+            box-shadow: none;
         }
 
-        /* Mensajes de feedback */
-        #message {
-            margin-top: 1.5rem;
-            font-size: 0.95rem;
-            border-radius: 12px;
-            padding: 1rem;
+        #success-msg {
             display: none;
+            margin-top: 1.5rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.8s;
         }
 
-        #message.success {
-            display: block;
-            background: rgba(34, 197, 94, 0.1);
-            color: #4ade80;
-            border: 1px solid rgba(34, 197, 94, 0.2);
-        }
-
-        #message.error {
-            display: block;
-            background: rgba(239, 68, 68, 0.1);
-            color: #f87171;
-            border: 1px solid rgba(239, 68, 68, 0.2);
-        }
-
-        /* Animación de entrada */
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -212,39 +406,134 @@
     <nav>
         <a href="#" class="logo">FlatTwin</a>
     </nav>
-    
-    <div class="main-container">
-        <div class="content">
-            <h1>Coming Soon</h1>
-            <p class="description">Encuentra a tu compañero ideal. Únete a la lista de espera exclusiva.</p>
-            
-            <form class="subscribe-form" id="leadForm">
-                <div class="input-group">
-                    <label for="name">Nombre Completo*</label>
-                    <input type="text" id="name" name="name" placeholder="Ej. Juan Pérez" required>
-                </div>
-                
-                <div class="input-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="tu@email.com">
-                </div>
 
-                <div class="input-group">
-                    <label for="phone">Teléfono móvil</label>
-                    <input type="tel" id="phone" name="phone" placeholder="600 000 000">
-                </div>
-                
-                <button type="submit" id="submitBtn">Unirme a la lista</button>
-            </form>
+    <!-- PANTALLA 1 -->
+    <div id="screen1" class="screen active">
+        <h1 class="s1-txt1" id="s1t1">Algunas decisiones<br>cambian todo</h1>
+        <p class="s1-txt3" id="s1t3">(Imagina que tu amiga/o no lo hubiese dejado con su ex)</p>
+        <button class="btn-relief s1-btn" id="s1b" onclick="goToScreen(2)">Quiero entrar</button>
+    </div>
 
-            <div id="message"></div>
+    <!-- PANTALLA 2 -->
+    <div id="screen2" class="screen">
+        <div class="s2-texts">
+            <div class="s2-text" id="s2t1">No es lo que estas pensando</div>
+            <div class="s2-text" id="s2t2">Y probablemente lo vas a necesitar</div>
+            <div class="s2-text" id="s2t3">Pero no todavía</div>
+        </div>
+        <button class="btn-relief s2-btn" id="s2b" onclick="goToScreen(3)">Pulsa para continuar</button>
+    </div>
+
+    <!-- PANTALLA 3 -->
+    <div id="screen3" class="screen">
+        <div class="phone-silhouette">
+            <div class="chat-header">
+                <span class="chat-logo">FLATWIN</span>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="typing-indicator" id="typing">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="bubble left" id="chatMsg" style="display:none;">
+                    ¡Estás de suerte! No cualquiera puede entrar. ¿Te gustaría ser uno de nosotros?
+                </div>
+            </div>
+            <div class="chat-footer">
+                <button class="chat-action-btn" id="chatReply" style="display:none;" onclick="sendReply()">
+                    Sí quiero
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA 4 -->
+    <div id="screen4" class="screen">
+        <h1 class="s4-title">Coming Soon..</h1>
+        
+        <form class="form-container" id="leadForm">
+            <div class="input-wrapper">
+                <label for="name">Nombre*</label>
+                <input type="text" id="name" placeholder="Ej. Juan Pérez" required>
+            </div>
+            <div class="input-wrapper">
+                <label for="email">Email*</label>
+                <input type="email" id="email" placeholder="tu@email.com">
+            </div>
+            <div class="input-wrapper">
+                <label for="phone">Eres de los que no mira el correo. Déjanos tu teléfono.</label>
+                <input type="tel" id="phone" placeholder="600 000 000">
+            </div>
+            <button type="submit" class="btn-relief s4-btn" id="submitBtn">Enviar</button>
+        </form>
+
+        <div id="success-msg">
+            ¡Genial! Ya eres uno mas del team Flatwin. Hablaremos pronto.
         </div>
     </div>
 
     <script>
+        // Iniciar animación de Pantalla 1
+        window.onload = () => {
+            setTimeout(() => document.getElementById('s1t1').classList.add('animate-down'), 200);
+            setTimeout(() => document.getElementById('s1t3').classList.add('animate-down'), 1200);
+            setTimeout(() => document.getElementById('s1b').classList.add('animate-down'), 2000);
+        };
+
+        // Cambio entre pantallas
+        function goToScreen(num) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen' + num).classList.add('active');
+
+            if (num === 2) {
+                animateScreen2();
+            } else if (num === 3) {
+                animateScreen3();
+            }
+        }
+
+        // Animación Pantalla 2
+        function animateScreen2() {
+            const t1 = document.getElementById('s2t1');
+            const t2 = document.getElementById('s2t2');
+            const t3 = document.getElementById('s2t3');
+            const btn = document.getElementById('s2b');
+
+            setTimeout(() => t1.classList.add('visible'), 500);
+            setTimeout(() => t2.classList.add('visible'), 2500);
+            setTimeout(() => t3.classList.add('visible'), 4500);
+            setTimeout(() => btn.classList.add('visible'), 6000);
+        }
+
+        // Animación Pantalla 3
+        function animateScreen3() {
+            const typing = document.getElementById('typing');
+            const msg = document.getElementById('chatMsg');
+            const reply = document.getElementById('chatReply');
+
+            setTimeout(() => {
+                typing.style.display = 'none';
+                msg.style.display = 'block';
+                msg.style.animation = 'popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+                
+                setTimeout(() => {
+                    reply.style.display = 'block';
+                    reply.style.animation = 'slideUpFadeIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+                }, 1500);
+            }, 2500);
+        }
+
+        function sendReply() {
+            const reply = document.getElementById('chatReply');
+            reply.style.animation = 'flyUpOut 0.5s forwards';
+            setTimeout(() => {
+                goToScreen(4);
+            }, 500);
+        }
+
+        // Lógica del Formulario en Pantalla 4
         const form = document.getElementById('leadForm');
-        const messageDiv = document.getElementById('message');
         const submitBtn = document.getElementById('submitBtn');
+        const successMsg = document.getElementById('success-msg');
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -253,48 +542,38 @@
             const email = document.getElementById('email').value;
             const phone = document.getElementById('phone').value;
 
-            // Validación mínima: al menos email o teléfono
+            // Validación mínima: email o teléfono
             if (!email && !phone) {
-                showMessage('Debes introducir al menos un email o un teléfono para que podamos contactarte.', 'error');
+                alert('Debes introducir al menos un email o un teléfono para que podamos contactarte.');
                 return;
             }
 
-            // Bloquear botón
             submitBtn.disabled = true;
             submitBtn.innerText = 'Enviando...';
-            messageDiv.style.display = 'none';
 
             try {
-                // Cambia esta URL por la de tu backend real en producción
                 const response = await fetch('https://flattwinbackend-production.up.railway.app/api/v1/leads', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name, email, phone }),
                 });
 
                 const data = await response.json();
 
                 if (response.ok) {
-                    showMessage('¡Genial! Ya estás en la lista. Te avisaremos pronto.', 'success');
-                    form.reset();
+                    form.style.display = 'none';
+                    successMsg.style.display = 'block';
                 } else {
-                    showMessage(data.message || 'Ups! Algo ha salido mal. Inténtalo de nuevo.', 'error');
+                    alert(data.message || 'Ups! Algo ha salido mal. Inténtalo de nuevo.');
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = 'Enviar';
                 }
             } catch (error) {
-                showMessage('No se ha podido conectar con el servidor. Revisa tu conexión.', 'error');
-            } finally {
+                alert('No se ha podido conectar con el servidor. Revisa tu conexión.');
                 submitBtn.disabled = false;
-                submitBtn.innerText = 'Unirme a la lista';
+                submitBtn.innerText = 'Enviar';
             }
         });
-
-        function showMessage(text, type) {
-            messageDiv.innerText = text;
-            messageDiv.className = type;
-            messageDiv.style.display = 'block';
-        }
     </script>
 </body>
 </html>
