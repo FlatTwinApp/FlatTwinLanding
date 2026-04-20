@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlatTwin | Coming Soon</title>
+    <title>FlatTwin | Coming Soon (V2)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -52,7 +52,7 @@
         }
 
         nav .logo {
-            font-size: 2rem;
+            font-size: 2rem; /* Increased */
             font-weight: 800;
             letter-spacing: -1px;
             background: linear-gradient(to right, #ffffff, #a3c2ff);
@@ -73,7 +73,7 @@
             padding-top: 80px;
             text-align: center;
             width: 100%;
-            max-width: 700px;
+            max-width: 700px; /* Increased */
             margin: 0 auto;
         }
         .screen.active {
@@ -86,9 +86,9 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 4px 4px 15px rgba(0,0,0,0.3), inset 1px 1px 3px rgba(255,255,255,0.2);
             border-radius: 30px;
-            padding: 1.2rem 3rem;
+            padding: 1.2rem 3rem; /* Increased */
             color: #fff;
-            font-size: 1.3rem;
+            font-size: 1.3rem; /* Increased */
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -103,7 +103,7 @@
 
         /* === PANTALLA 1 === */
         .s1-txt1 {
-            font-size: clamp(3rem, 7vw, 4.5rem);
+            font-size: clamp(3rem, 7vw, 4.5rem); /* Increased */
             font-weight: 800;
             line-height: 1.1;
             text-shadow: 0px 4px 20px rgba(0,0,0,0.3);
@@ -112,7 +112,7 @@
             transform: translateY(-30px);
         }
         .s1-txt3 {
-            font-size: 1.5rem;
+            font-size: 1.5rem; /* Increased from 1.1rem */
             font-weight: 400;
             color: rgba(255, 255, 255, 0.9);
             margin-bottom: 3.5rem;
@@ -142,7 +142,7 @@
             margin-bottom: 1rem;
         }
         .s2-text {
-            font-size: 2rem;
+            font-size: 2rem; /* Increased from 1.5rem */
             font-weight: 600;
             margin-top: 1.5rem;
             min-height: 2.4rem;
@@ -154,7 +154,7 @@
             border-right: .15em solid orange;
             white-space: nowrap;
             margin: 0 auto;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.02em; /* Reduced spacing to match Inter style */
             width: 0;
         }
         
@@ -170,8 +170,8 @@
         /* === PANTALLA 3 (Chat) === */
         .phone-silhouette {
             width: 100%;
-            max-width: 350px;
-            height: 600px;
+            max-width: 350px; /* Increased */
+            height: 600px; /* Increased */
             border: 6px solid rgba(255,255,255,0.3);
             border-radius: 40px;
             padding: 20px 15px 15px 15px;
@@ -223,7 +223,7 @@
             padding: 12px 18px;
             border-radius: 20px;
             max-width: 85%;
-            font-size: 1.1rem;
+            font-size: 1.1rem; /* Increased */
             line-height: 1.4;
             opacity: 0;
             box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
@@ -316,7 +316,7 @@
             width: 100%;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 24px;
-            padding: 2.5rem;
+            padding: 2.5rem; /* Increased */
             border: 1px solid rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             box-shadow: 0 20px 50px rgba(0,0,0,0.3);
@@ -332,18 +332,18 @@
             gap: 0.6rem;
         }
         .input-wrapper label {
-            font-size: 1rem;
+            font-size: 1rem; /* Increased */
             color: rgba(255,255,255,0.9);
             margin-left: 0.5rem;
         }
         .form-container input {
             width: 100%;
-            padding: 1.2rem 1.5rem;
+            padding: 1.2rem 1.5rem; /* Increased */
             border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             background: rgba(255, 255, 255, 0.1);
             color: #fff;
-            font-size: 1.1rem;
+            font-size: 1.1rem; /* Increased */
             outline: none;
             transition: all 0.3s ease;
             box-shadow: inset 2px 2px 5px rgba(0,0,0,0.2);
@@ -356,7 +356,7 @@
             width: 100%;
             border-color: transparent;
             box-shadow: 0 4px 15px rgba(71, 116, 208, 0.4);
-            font-size: 1.4rem;
+            font-size: 1.4rem; /* Increased */
         }
 
         #success-msg {
@@ -367,7 +367,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
             color: #fff;
-            font-size: 1.4rem;
+            font-size: 1.4rem; /* Increased */
             font-weight: 600;
             box-shadow: 0 20px 50px rgba(0,0,0,0.3);
             backdrop-filter: blur(10px);
@@ -402,6 +402,7 @@
             <div class="s2-text" id="s2t2"></div>
             <div class="s2-text" id="s2t3"></div>
         </div>
+        <!-- No button here, automated transition -->
     </div>
 
     <!-- PANTALLA 3 -->
@@ -517,8 +518,10 @@
             const chatBody = document.getElementById('chatBody');
             const replyBtn = document.getElementById('chatReply');
             
+            // Ocultar botón
             replyBtn.style.display = 'none';
             
+            // Añadir burbuja de respuesta del usuario
             const userBubble = document.createElement('div');
             userBubble.className = 'bubble right';
             userBubble.innerHTML = "Sí, quiero entrar";
@@ -526,6 +529,7 @@
             userBubble.style.animation = 'popIn 0.3s forwards';
             chatBody.appendChild(userBubble);
             
+            // Scroll al final
             chatBody.scrollTop = chatBody.scrollHeight;
 
             setTimeout(() => {
